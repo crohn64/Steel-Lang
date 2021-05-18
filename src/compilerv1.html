@@ -1,0 +1,91 @@
+<script>
+var answer;
+window.onload = function(){
+var code = document.getElementById("steel").innerHTML;
+code = code.split("\n");
+var currentLine = 0;
+var currentWord = 0;
+
+while(currentLine != code.length){
+
+var word = code[currentLine].split(" ");
+
+//functions declaration beta
+
+//create a variable
+if(word[0] == "variable"){
+eval("var " + word[1] + ";");
+}
+
+//set the variables value
+if(word[0] == "set"){
+
+var out = word;
+var j = out.slice(3);
+j = j.join(" ");
+eval(word[1] + " = " + j)
+
+}
+//print to screen
+if(word[0] == "print"){
+
+var out = word;
+var j = out.slice(1);
+j = j.join(" ");
+alert(eval(j))
+}
+
+//get input
+if(word[0] == "input"){
+var out = word;
+var j = out.slice(1);
+j = j.join(" ");
+var answer = prompt(eval(j))
+}
+
+//goto section
+if(word[0] == "goto"){
+var l = word[1];
+code.forEach(function (item, index) {
+  item = item.replace("section ","");
+  if(item == l){
+  currentLine = index;
+  
+  }
+});
+
+}
+//if statement
+if(word[0] == "if"){
+var out = word;
+var j = out.slice(1);
+j = j.join(" ");
+if(eval(j)){
+code[currentLine + 1] = code[currentLine + 1].replace(" do ","");
+}else{
+code[currentLine + 2] = code[currentLine + 2].replace(" else ","");
+}
+}
+
+
+currentLine += 1;
+
+}
+
+
+
+
+}
+
+</script>
+
+
+<script id="steel">
+
+input "What is your name?"
+
+if answer == "Bob" 
+ do print "Hi Bob. I know you!"
+ else print "I don't know you " + answer
+
+</script>
